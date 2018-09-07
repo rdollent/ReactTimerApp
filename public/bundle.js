@@ -110,12 +110,12 @@
 	var Countdown = __webpack_require__(226);
 
 	// load foundation
-	__webpack_require__(228);
+	__webpack_require__(229);
 	// require does not know how to load css. use css! loader
 	$(document).foundation();
 
 	// app css
-	__webpack_require__(232);
+	__webpack_require__(233);
 
 	ReactDOM.render(React.createElement(
 	    Router,
@@ -24921,18 +24921,13 @@
 	    return React.createElement(
 	        "div",
 	        null,
+	        React.createElement(Nav, null),
 	        React.createElement(
 	            "div",
-	            null,
+	            { className: "row" },
 	            React.createElement(
 	                "div",
-	                null,
-	                React.createElement(Nav, null),
-	                React.createElement(
-	                    "p",
-	                    null,
-	                    "Main.jsx rendered"
-	                ),
+	                { className: "column small-centered medium-6 large-4" },
 	                props.children
 	            )
 	        )
@@ -25103,8 +25098,8 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var React = __webpack_require__(8);
-
 	var Clock = __webpack_require__(227);
+	var CountdownForm = __webpack_require__(228);
 
 	var Countdown = function (_React$Component) {
 	    _inherits(Countdown, _React$Component);
@@ -25112,16 +25107,30 @@
 	    function Countdown(props) {
 	        _classCallCheck(this, Countdown);
 
-	        return _possibleConstructorReturn(this, (Countdown.__proto__ || Object.getPrototypeOf(Countdown)).call(this, props));
+	        var _this = _possibleConstructorReturn(this, (Countdown.__proto__ || Object.getPrototypeOf(Countdown)).call(this, props));
+
+	        _this.handleSetCountdown = function (seconds) {
+	            _this.setState({
+	                count: seconds
+	            });
+	        };
+
+	        _this.state = { count: 0 };
+	        // bind or use arrow functions
+	        // this.handleSetCountdown = this.handleSetCountdown.bind(this);
+	        return _this;
 	    }
 
 	    _createClass(Countdown, [{
 	        key: 'render',
 	        value: function render() {
+	            var count = this.state.count;
+
 	            return React.createElement(
 	                'div',
 	                null,
-	                React.createElement(Clock, { totalSeconds: 129 })
+	                React.createElement(Clock, { totalSeconds: count }),
+	                React.createElement(CountdownForm, { onSetCountdown: this.handleSetCountdown })
 	            );
 	        }
 	    }]);
@@ -25205,13 +25214,80 @@
 /* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var React = __webpack_require__(8);
+
+	var CountdownForm = function (_React$Component) {
+	    _inherits(CountdownForm, _React$Component);
+
+	    function CountdownForm(props) {
+	        _classCallCheck(this, CountdownForm);
+
+	        // bind this to functions
+	        // https://stackoverflow.com/questions/29577977/unable-to-access-react-instance-this-inside-event-handler
+	        // bind your methods or use arrow functions
+	        // this.onSubmit = this.onSubmit(this);
+
+	        var _this = _possibleConstructorReturn(this, (CountdownForm.__proto__ || Object.getPrototypeOf(CountdownForm)).call(this, props));
+
+	        _this.onSubmit = function (e) {
+	            e.preventDefault();
+	            var strSeconds = _this.refs.seconds.value;
+
+	            if (strSeconds.match(/^[0-9]+$/)) {
+	                _this.refs.seconds.value = '';
+	                _this.props.onSetCountdown(parseInt(strSeconds, 10));
+	            }
+	        };
+
+	        return _this;
+	    }
+
+	    _createClass(CountdownForm, [{
+	        key: 'render',
+	        value: function render() {
+	            return React.createElement(
+	                'div',
+	                null,
+	                React.createElement(
+	                    'form',
+	                    { onSubmit: this.onSubmit, ref: 'form', className: 'countdown-form' },
+	                    React.createElement('input', { type: 'text', ref: 'seconds', placeholder: 'Enter time in seconds' }),
+	                    React.createElement(
+	                        'button',
+	                        { className: 'button expanded' },
+	                        'Start'
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return CountdownForm;
+	}(React.Component);
+
+	module.exports = CountdownForm;
+
+/***/ },
+/* 229 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(229);
+	var content = __webpack_require__(230);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(231)(content, {});
+	var update = __webpack_require__(232)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -25228,10 +25304,10 @@
 	}
 
 /***/ },
-/* 229 */
+/* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(230)();
+	exports = module.exports = __webpack_require__(231)();
 	// imports
 
 
@@ -25242,7 +25318,7 @@
 
 
 /***/ },
-/* 230 */
+/* 231 */
 /***/ function(module, exports) {
 
 	/*
@@ -25298,7 +25374,7 @@
 
 
 /***/ },
-/* 231 */
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -25552,16 +25628,16 @@
 
 
 /***/ },
-/* 232 */
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(233);
+	var content = __webpack_require__(234);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(231)(content, {});
+	var update = __webpack_require__(232)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -25578,10 +25654,10 @@
 	}
 
 /***/ },
-/* 233 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(230)();
+	exports = module.exports = __webpack_require__(231)();
 	// imports
 
 
