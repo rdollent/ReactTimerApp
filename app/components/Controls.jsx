@@ -12,6 +12,11 @@ class Controls extends React.Component{
         }
     }
 
+    // // note willReceiveProps is unsafe and will be deprecated
+    // componentWillReceiveProps = (nextProps) => {
+    //     console.log('component will receive props', nextProps.countdownStatus);
+    // }
+
     render = () => {
         var {countdownStatus} = this.props;
 

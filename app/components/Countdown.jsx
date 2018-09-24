@@ -33,6 +33,26 @@ class Countdown extends React.Component{
             }
         }
     }
+    // // willUpdate is unsafe/will be deprecated
+    // componentWillUpdate = (nextProps, nextState) => {
+        
+    // }
+
+    // // note willmount is unsafe/will be deprecated
+    // componentWillMount = () => {
+    //     console.log('component will mount');
+        
+    // }
+
+    // componentDidMount =() => {
+    //     console.log('component did mount');
+    // }
+
+    componentWillUnmount = () => {
+        console.log('component will unmount');
+        clearInterval(this.timer)
+        this.timer = undefined;
+    }
 
     startTimer = () => {
         this.timer = setInterval(() => {
@@ -41,6 +61,11 @@ class Countdown extends React.Component{
                 count: newCount >= 0 ? newCount : 0
             });
 
+            if(newCount === 0) {
+                this.setState({
+                    countdownStatus: 'stopped'
+                });
+            }
         }, 1000);
     }
 
@@ -57,7 +82,6 @@ class Countdown extends React.Component{
             countdownStatus: newStatus
         });
     }
-
 
     render = () => {
         var {count, countdownStatus} = this.state;

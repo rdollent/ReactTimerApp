@@ -25128,12 +25128,24 @@
 	            }
 	        };
 
+	        _this.componentWillUnmount = function () {
+	            console.log('component will unmount');
+	            clearInterval(_this.timer);
+	            _this.timer = undefined;
+	        };
+
 	        _this.startTimer = function () {
 	            _this.timer = setInterval(function () {
 	                var newCount = _this.state.count - 1;
 	                _this.setState({
 	                    count: newCount >= 0 ? newCount : 0
 	                });
+
+	                if (newCount === 0) {
+	                    _this.setState({
+	                        countdownStatus: 'stopped'
+	                    });
+	                }
 	            }, 1000);
 	        };
 
@@ -25180,6 +25192,20 @@
 	        // this.handleSetCountdown = this.handleSetCountdown.bind(this);
 	        return _this;
 	    }
+	    // // willUpdate is unsafe/will be deprecated
+	    // componentWillUpdate = (nextProps, nextState) => {
+
+	    // }
+
+	    // // note willmount is unsafe/will be deprecated
+	    // componentWillMount = () => {
+	    //     console.log('component will mount');
+
+	    // }
+
+	    // componentDidMount =() => {
+	    //     console.log('component did mount');
+	    // }
 
 	    // status passed down from/to Controls
 
@@ -25390,6 +25416,11 @@
 
 	        return _this;
 	    }
+
+	    // // note willReceiveProps is unsafe and will be deprecated
+	    // componentWillReceiveProps = (nextProps) => {
+	    //     console.log('component will receive props', nextProps.countdownStatus);
+	    // }
 
 	    return Controls;
 	}(React.Component);
