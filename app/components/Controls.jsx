@@ -40,8 +40,8 @@ class Controls extends React.Component{
 
 
 Controls.propTypes = {
-    countdownStatus: React.PropTypes.string.isRequred,
-    onStatusChange: React.PropTypes.func.isRequred
+    countdownStatus: React.PropTypes.string.isRequired,
+    onStatusChange: React.PropTypes.func.isRequired
 }
 
 module.exports = Controls;
