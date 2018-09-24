@@ -25089,8 +25089,6 @@
 
 	'use strict';
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -25109,31 +25107,51 @@
 
 	        var _this = _possibleConstructorReturn(this, (Countdown.__proto__ || Object.getPrototypeOf(Countdown)).call(this, props));
 
+	        _this.componentDidUpdate = function (prevProps, prevState) {
+	            if (_this.state.countdownStatus !== prevState.countdownStatus) {
+	                switch (_this.state.countdownStatus) {
+	                    case 'started':
+	                        _this.startTimer();
+	                        break;
+	                }
+	            }
+	        };
+
+	        _this.startTimer = function () {
+	            _this.timer = setInterval(function () {
+	                var newCount = _this.state.count - 1;
+	                _this.setState({
+	                    count: newCount >= 0 ? newCount : 0
+	                });
+	            }, 1000);
+	        };
+
 	        _this.handleSetCountdown = function (seconds) {
 	            _this.setState({
-	                count: seconds
+	                count: seconds,
+	                countdownStatus: 'started'
 	            });
 	        };
 
-	        _this.state = { count: 0 };
-	        // bind or use arrow functions
-	        // this.handleSetCountdown = this.handleSetCountdown.bind(this);
-	        return _this;
-	    }
-
-	    _createClass(Countdown, [{
-	        key: 'render',
-	        value: function render() {
-	            var count = this.state.count;
+	        _this.render = function () {
+	            var count = _this.state.count;
 
 	            return React.createElement(
 	                'div',
 	                null,
 	                React.createElement(Clock, { totalSeconds: count }),
-	                React.createElement(CountdownForm, { onSetCountdown: this.handleSetCountdown })
+	                React.createElement(CountdownForm, { onSetCountdown: _this.handleSetCountdown })
 	            );
-	        }
-	    }]);
+	        };
+
+	        _this.state = {
+	            count: 0,
+	            countdownStatus: 'stopped'
+	        };
+	        // bind or use arrow functions
+	        // this.handleSetCountdown = this.handleSetCountdown.bind(this);
+	        return _this;
+	    }
 
 	    return Countdown;
 	}(React.Component);
