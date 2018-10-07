@@ -1,5 +1,14 @@
 // leave off underscore and file extension
 @import "base/variables";
+
+// foundation loaded with scss
+// copy what is in node_modules/foundation-sites/scss/settings/_settings.scss to styles/base/_foundation-settings.scss
+@import "base/foundation-settings";
+@import "foundation"; 
+@include foundation-everything;
+
+
+// components
 @import "components/navigation";
 @import 'components/clock';
 @import 'components/controls';

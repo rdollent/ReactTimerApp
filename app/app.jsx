@@ -11,13 +11,16 @@ var Countdown = require("Countdown");
 
 
 // load foundation
-require("style!css!foundation-sites/dist/foundation.min.css");
+// old css versionW--- require("style!css!foundation-sites/dist/foundation.min.css");
+
 // require does not know how to load css. use css! loader
 $(document).foundation();
 
 
 // app css
+// comment this out for webpack to work
 require("style!css!sass!applicationStyles");
+// require('applicationStyles');
 
 ReactDOM.render(
     <Router history={hashHistory}>
